@@ -21,7 +21,9 @@ for video in videos:
         success = False
         print("读取失败!")
 
+
     zj_path = "./result/img"
+    os.makedirs(zj_path, exist_ok=True)
 
     if video[:2] not in os.listdir(zj_path):
         os.mkdir(os.path.join(zj_path, video[:2]))
