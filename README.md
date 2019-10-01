@@ -26,8 +26,8 @@ YOLOv3、keypoints-Mask-R-CNN、SiamsRPN可以根据参考文献内容。
 
 ### 数据和预训练权重保存
 ##### 训练数据
-- [cityperson]()
-- [cuhk]()
+- [cityperson(rar)](https://pan.baidu.com/s/1yui64WJi92-bOh49qufCzg)
+- [cuhk](https://pan.baidu.com/s/17mPbmo4NdFmx1pDgUC1msg)
 
 ##### 预训练权重
 预训练权重保存在weights目录下
