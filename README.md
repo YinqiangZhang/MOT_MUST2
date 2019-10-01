@@ -27,9 +27,9 @@ YOLOv3、keypoints-Mask-R-CNN、SiamsRPN, ReID[[9]](https://arxiv.org/abs/1811.1
 ### 数据和预训练权重保存
 ##### 训练数据
 本次比赛用到的数据集主要有两类，行人检测数据集citypersons（包含网上搜索自标注的50张图片）和行人重识别的cuhk数据集
-使用方法：
-将下载的文件夹放入相应的文件夹中，如citypersons连接中包含images的压缩包，可替代仓库中的dataset中的cityperson中的images文件夹
-连接如下
+###### 使用方法：
+将下载的文件夹放入相应的文件夹中，如citypersons连接中包含images的压缩包，可替代仓库中的data中的citypersons中的images文件夹,cuhk-np直接放入data中
+###### 连接如下：
 - [citypersons(rar)](https://pan.baidu.com/s/1yui64WJi92-bOh49qufCzg)
 - [cuhk](https://pan.baidu.com/s/17mPbmo4NdFmx1pDgUC1msg)
 
