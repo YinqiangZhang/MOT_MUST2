@@ -34,7 +34,7 @@ is_visualisation = False
 # print the information of the tracking process or not 
 is_print = True
 
-results_dir = os.path.join(track_dir, "results")
+results_dir = os.path.join(dataset_dir,'track')
 if not os.path.exists(results_dir):
     os.makedirs(results_dir)
 img_traj_dir = os.path.join(track_dir, "img_traj")
