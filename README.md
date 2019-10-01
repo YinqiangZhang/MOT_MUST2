@@ -4,9 +4,6 @@
 
 ### 代码环境配置运行
 
-- 下载ReID模型相关参数，链接请点击[链接](https://pan.baidu.com/s/1sROOxFIgQYqrZA0CvLuMUA)。
-* 将所有文件放入weights文件夹中
-- 运行根目录demo.py文件
 
 ### 方案说明与算法原理
 ##### 成绩运行时间说明
@@ -42,7 +39,7 @@
 - [YOLOv3预训练（用于训练行人检测的预训练Darknet53模型）](https://pan.baidu.com/s/1_5Rwvc8clnCb44z0R2o70Q)
 - [yolov3用于行人检测的权重](https://pan.baidu.com/s/1KsQPTdgABt_rRLn7H_AA8w)
 - [keypoints-Mask-R-CNN](https://pan.baidu.com/s/1a8A6xVNuuo6Zr3cc3DbB2Q)
-- [pysot]()
+- [pysot](https://pan.baidu.com/s/1sROOxFIgQYqrZA0CvLuMU)
 
 
 ### 训练
