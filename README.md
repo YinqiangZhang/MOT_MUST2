@@ -4,19 +4,20 @@
 
 ### 代码环境配置运行
 
-* 下载ReID模型相关参数，链接请点击[链接](https://pan.baidu.com/s/1sROOxFIgQYqrZA0CvLuMUA)。
+- 下载ReID模型相关参数，链接请点击[链接](https://pan.baidu.com/s/1sROOxFIgQYqrZA0CvLuMUA)。
 
-1. 将net_last.pth文件放置在.\pysot\mot_zj\MUST_ASSO\model\ft_ResNet50文件夹种；
-2. 将checkpoint.pth.tar文件放置在。\pysot\mot_zj\MUST_ASSO\Spatial_Attention\logs\cuhk_detected文件夹中。
-* 运行根目录demo.py文件
+1. 将net_last.pth文件放置在pysot\mot_zj\MUST_ASSO\model\ft_ResNet50文件夹种；
+2. 将checkpoint.pth.tar文件放置在pysot\mot_zj\MUST_ASSO\Spatial_Attention\logs\cuhk_detected文件夹中；
+3. 将alex_model.pth文件放置在\pysot\mot_zj\MUST_ASSO\Spatial_Attention文件夹中。
+- 运行根目录demo.py文件
 ### 方案说明与算法原理
 ##### 成绩运行时间说明
-- 目标检测：b1\2\3\5(yolov3):共计约2h（1050Max-q, 16G）
+- 目标检测：b1, b2, b3, b5(yolov3):共计约2h（1050Max-q, 16G）
 - 目标检测：b4(keypoints-Mask-R-CNN):约4h（1080Ti*1, 64G）
 - 基于检测结果输出跟踪提交结果：共计约5h（1080Ti*1, 64G）
 
 ##### 算法原理
-YOLOv3、keypoints-Mask-R-CNN、Siam++可以根据参考文献内容。
+YOLOv3、keypoints-Mask-R-CNN、SiamsRPN可以根据参考文献内容。
 
 ###### 算法框架
 ![之后需要替换](./readme_materials/reid.PNG)
