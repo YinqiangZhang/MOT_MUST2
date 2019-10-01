@@ -16,10 +16,17 @@
 - 目标检测：b4(keypoints-Mask-R-CNN):约4h（1080Ti*1, 64G）
 - 基于检测结果输出跟踪提交结果：共计约5h（1080Ti*1, 64G）
 
-##### 算法原理
-YOLOv3、keypoints-Mask-R-CNN、SiamsRPN可以根据参考文献内容。
+##### 行人跟踪算法原理描述
 
-###### 算法框架
+1. 结合单目标跟踪算法及行人重识别算法，实现有效的多目标跟踪框架；
+2. 视频检测结果由YOLOv3及Keypoints Mask-R-CNN提供；
+2. 应用SiamsRPN跟踪算法，确保对单个行人目标在非特殊场景下（无遮挡、剧烈变形等）的稳定跟踪；
+3. 针对困难场景（遮挡、形变），使用ReID算法进行数据关联；
+
+*详情请YOLOv3、keypoints-Mask-R-CNN、SiamsRPN可以根据参考文献内容。*
+
+###### 行人跟踪算法原理图
+
 ![之后需要替换](./readme_materials/reid.PNG)
 
 
@@ -58,9 +65,9 @@ python detector/det_process.py
 </code></pre>
 
 ### 目标跟踪
-##### SiamRPN
-使用pysot框架完成单个行人目标的跟踪
-
+<pre><code>
+python demo.py
+</code></pre>
 
 ### *特别说明*
 由于最后提交日时间问题，b3提交结果为level_1阶段应用提交的ECO跟踪算法。复赛的前几次结果也是应用ECO算法提交，即b3与9.12日提交结果一致。
