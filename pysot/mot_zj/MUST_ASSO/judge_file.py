@@ -103,7 +103,7 @@ use_gpu = torch.cuda.is_available()
 # Load model
 # ---------------------------
 def load_network(network):
-    save_path = os.path.join('pysot\\mot_zj\\MUST_ASSO\\model', name, 'net_%s.pth' % opt.which_epoch)
+    save_path = os.path.join(os.getcwd(), 'weights', 'net_%s.pth' % opt.which_epoch)
     network.load_state_dict(torch.load(save_path))
     return network
 

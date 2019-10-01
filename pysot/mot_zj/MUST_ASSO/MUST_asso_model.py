@@ -29,7 +29,7 @@ class AssociationModel(object):
         # model parameter setting:
         data_name = 'cuhk_detected'
         self.model = models.create('resnet50', num_features=256, dropout=0.5, num_classes=767)
-        checkpoint = load_checkpoint(os.path.join('pysot\\mot_zj\\MUST_ASSO\\Spatial_Attention\\logs', data_name, 'checkpoint.pth.tar'))
+        checkpoint = load_checkpoint(os.path.join(os.getcwd(), 'weights', 'checkpoint.pth.tar'))
         self.model.load_state_dict(checkpoint['state_dict'])
         self.model.eval()
         self.frame_root = os.path.join('.\\result\\img')

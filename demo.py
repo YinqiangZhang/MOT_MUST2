@@ -11,6 +11,7 @@ import yacs
 
 root = os.getcwd()
 track_dir = os.path.join(root, 'pysot')
+params_dir = os.path.join(root, 'weights')
 sys.path.append(root)
 sys.path.append(track_dir)
 
@@ -28,7 +29,7 @@ dataset_dir = os.path.join(root, 'result')
 seq_type = 'img'
 # set the path of config parameters and 
 config_path = os.path.join(track_dir, "mot_zj","MUST_config_file","alex_config.yaml")
-model_params = os.path.join(track_dir,"mot_zj", "MUST_config_file", "alex_model.pth")
+model_params = os.path.join(params_dir, "alex_model.pth")
 # enable the visualisation or not 
 is_visualisation = False
 # print the information of the tracking process or not 
