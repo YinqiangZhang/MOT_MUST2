@@ -18,7 +18,7 @@
 2. 应用SiamsRPN跟踪算法，确保对单个行人目标在非特殊场景下（无遮挡、剧烈变形等）的稳定跟踪；
 3. 针对困难场景（遮挡、形变），使用ReID算法进行数据关联；
 
-*详情请YOLOv3、keypoints-Mask-R-CNN、SiamsRPN可以根据参考文献内容。*
+*详情见YOLOv3、keypoints-Mask-R-CNN、SiamsRPN等参考文献内容。*
 
 ##### 行人跟踪算法原理图
 
