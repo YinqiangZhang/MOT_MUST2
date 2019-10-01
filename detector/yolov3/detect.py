@@ -118,7 +118,7 @@ def detect(save_txt=True, save_img=False, stream_img=False):
                         # save_res.append([int(im_num),-1,*xyxy,conf,-1,-1,-1])
                         #with open(save_path + '.txt', 'a') as file:
                             #file.write(('%g ' * 6 + '\n') % (*xyxy, cls, conf))
-                        with open(os.path.join(out, "det"+video_name+'.txt'),'a') as f:
+                        with open(os.path.join(out, 'det.txt'),'a') as f:
                             xyxy[2] = xyxy[2] - xyxy[0]
                             xyxy[3] = xyxy[3] - xyxy[1]
                             f.write(('%g ' * 10 + '\n') % (int(im_num),-1,*xyxy,conf,-1,-1,-1))
@@ -159,8 +159,8 @@ def detect(save_txt=True, save_img=False, stream_img=False):
     print('Done. (%.3fs)' % (time.time() - t0))
 
     if save_txt:
-        save_form = np.loadtxt(os.path.join(out, "det"+video_name+'.txt'))
-        np.savetxt(os.path.join(out, video_name+'.txt'),save_form,fmt="%d,%d,%.3f,%.3f,%.3f,%.3f,%.4f,%d,%d,%d")
+        save_form = np.loadtxt(os.path.join(out, 'det.txt'))
+        np.savetxt(os.path.join(out, 'det.txt'),save_form,fmt="%d,%d,%.3f,%.3f,%.3f,%.3f,%.4f,%d,%d,%d")
 
 
 if __name__ == '__main__':
