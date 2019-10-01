@@ -54,5 +54,3 @@ for video in videos:
 
     print("%s  finished"%video)
     cap.release()
-                    
-                
