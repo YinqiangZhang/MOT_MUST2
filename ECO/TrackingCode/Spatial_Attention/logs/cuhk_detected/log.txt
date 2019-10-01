@@ -1,0 +1,6 @@
+Cuhk dataset loaded
+  subset   | # ids | # images
+  ---------------------------
+  train    |     0 |        0
+  query    |     0 |        0
+  gallery  |     0 |        0

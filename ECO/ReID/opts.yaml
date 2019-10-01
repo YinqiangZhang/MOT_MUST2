@@ -1,0 +1,10 @@
+PCB: false
+alpha: 1.0
+batchsize: 8
+color_jitter: false
+data_dir: ./Market1501/pytorch
+gpu_ids: '0'
+lr: 0.01
+name: ft_ResNet50
+train_all: false
+use_dense: false

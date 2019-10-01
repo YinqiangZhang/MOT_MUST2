@@ -62,21 +62,12 @@ python pysot/ReID/main.py -d cuhk -b 20 -j 4 --epochs 100 --log ./logs/cuhk_dete
 
 为了增强黑夜检测效果的性能，b4采用keypoints-Mask-R-CNN，其他视频检测应用YOLOv3。
 
-### 生成每帧图像和检测保存路径
-<pre><code>python detector/to_img.py
-</code></pre>
-
-### 目标检测及后处理
-<pre><code>For b1: python3 detector/yolov3/detect.py --source result/img/b1/img1 --output result/img/b1/det --img-size 1920 --save_txt
-For b2: python3 detector/yolov3/detect.py --source result/img/b2/img1 --output result/img/b2/det --img-size 1920 --save_txt
-For b3: python3 detector/yolov3/detect.py --source result/img/b3/img1 --output result/img/b3/det --img-size 608 --save_txt
-For b5: python3 detector/yolov3/detect.py --source result/img/b5/img1 --output result/img/b5/det --img-size 1024 --save_txt
-FOR b4: python detector/Mask_R_CNN_Keypoints/video_demo.py
-python detector/det_process.py
+### 生成每帧图像和检测保存,目标检测及后处理
+<pre><code>initialize.sh
 </code></pre>
 
 ### 目标跟踪
-<pre><code>python demo.py
+<pre><code>test.sh
 </code></pre>
 
 ### 提交结果
