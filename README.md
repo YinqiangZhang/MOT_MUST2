@@ -66,7 +66,11 @@ python pysot/ReID/main.py -d cuhk -b 20 -j 4 --epochs 100 --log ./logs/cuhk_dete
 </code></pre>
 
 ### 目标检测及后处理
-<pre><code>FOR b1,b2,b3,b5: python detector/YOLO/video_demo.py
+<pre><code>
+For b1: python3 detector/yolov3/detect.py --source result/img/b1/img1 --output result/img/b1/det --img-size 1920 --save_txt
+For b2: python3 detector/yolov3/detect.py --source result/img/b2/img1 --output result/img/b2/det --img-size 1920 --save_txt
+For b3: python3 detector/yolov3/detect.py --source result/img/b3/img1 --output result/img/b3/det --img-size 608 --save_txt
+For b5: python3 detector/yolov3/detect.py --source result/img/b5/img1 --output result/img/b5/det --img-size 1024 --save_txt
 FOR b4: python detector/Mask_R_CNN_Keypoints/video_demo.py
 python detector/det_process.py
 </code></pre>
