@@ -31,7 +31,8 @@ YOLOv3、keypoints-Mask-R-CNN、SiamsRPN可以根据参考文献内容。
 
 ##### 预训练权重
 预训练权重保存在weights目录下
-- YOLOv3():[yolov3_weights.pt]()
+- [YOLOv3预训练（用于训练行人检测的预训练Darknet53模型）](https://pan.baidu.com/s/1_5Rwvc8clnCb44z0R2o70Q)
+- [yolov3用于行人检测的权重](https://pan.baidu.com/s/1KsQPTdgABt_rRLn7H_AA8w)
 - [keypoints-Mask-R-CNN](https://pan.baidu.com/s/1a8A6xVNuuo6Zr3cc3DbB2Q)
 - [pysot]()
 
