@@ -10,6 +10,7 @@
 2. 将checkpoint.pth.tar文件放置在pysot\mot_zj\MUST_ASSO\Spatial_Attention\logs\cuhk_detected文件夹中；
 3. 将alex_model.pth文件放置在\pysot\mot_zj\MUST_ASSO\Spatial_Attention文件夹中。
 - 运行根目录demo.py文件
+
 ### 方案说明与算法原理
 ##### 成绩运行时间说明
 - 目标检测：b1, b2, b3, b5(yolov3):共计约2h（1050Max-q, 16G）
@@ -30,7 +31,7 @@ YOLOv3、keypoints-Mask-R-CNN、SiamsRPN可以根据参考文献内容。
 
 ##### 预训练权重
 预训练权重保存在weights目录下
-- YOLOv3:[darknetXXXX]()
+- YOLOv3():[yolov3_weights.pt]()
 - [keypoints-Mask-R-CNN](https://pan.baidu.com/s/1a8A6xVNuuo6Zr3cc3DbB2Q)
 - [pysot]()
 
