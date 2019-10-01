@@ -36,9 +36,17 @@ YOLOv3、keypoints-Mask-R-CNN、SiamsRPN可以根据参考文献内容。
 
 
 ### 训练
-##### Yolo检测网络训练
+#### Yolo检测网络训练
+<pre><code> python3 detector/yolov3/train.py --multi-scale
+</code></pre> 
 
-##### ReID网络训练
+#### ReID网络训练
+<pre><code>ReID 部分我们使用了cuhk数据集，这个数据集有两个部分cuhk-labelled and cuhk-detected, 最后使用了cuhk-labelled的训练结果
+for cuhk-labelled 
+python pysot/ReID/main.py -d cuhk -b 20 -j 4 --epochs 100 --log ./logs/cuhk_labeled/ --step-size 40 --data data/cuhk03-np/labeled
+for cuhk-detected
+python pysot/ReID/main.py -d cuhk -b 20 -j 4 --epochs 100 --log ./logs/cuhk_detected/ --step-size 40 --data-dir data/cuhk03-np/labeled
+</code></pre>
 
 ##### 其他
 本次比赛中，检测算法使用了[YOLOv3](https://github.com/ultralytics/yolov3)和[keypoints-Mask-R-CNN](https://github.com/chrispolo/Keypoints-of-humanpose-with-Mask-R-CNN)两种方法。

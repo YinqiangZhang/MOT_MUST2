@@ -3,4 +3,4 @@
 数据集包括
 citypersons: YOLOv3使用的行人检测数据集
 
-Mrket1501,cuhk： ReID训练集合
+cuhk： ReID训练集合

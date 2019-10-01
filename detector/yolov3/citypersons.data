@@ -1,6 +1,6 @@
 classes=1
-train=./citypersons_train_modi.txt
-valid=./citypersons_val_modi.txt
-names=./citypersons.names
+train=detector/yolov3/citypersons_train_modi.txt
+valid=detector/yolov3/citypersons_val_modi.txt
+names = detector/yolov3/citypersons.names
 backup=backup/
 eval=citypersons
