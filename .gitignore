@@ -1,6 +1,7 @@
 # MUST
 *.mp4
 
+*.xmind
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
