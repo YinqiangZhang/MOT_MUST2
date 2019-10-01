@@ -31,6 +31,7 @@
 将下载的文件夹放入相应的文件夹中，如citypersons连接中包含images的压缩包，可替代仓库中的data中的citypersons中的images文件夹,cuhk-np直接放入data中
 ###### 链接如下：
 - [citypersons(rar)](https://pan.baidu.com/s/1yui64WJi92-bOh49qufCzg)
+- [citypersons(zip)](https://pan.baidu.com/s/17E1WJN363S756fYGcEtgtg)
 - [cuhk](https://pan.baidu.com/s/17mPbmo4NdFmx1pDgUC1msg)
 
 ##### 预训练权重
