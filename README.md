@@ -5,10 +5,7 @@
 ### 代码环境配置运行
 
 - 下载ReID模型相关参数，链接请点击[链接](https://pan.baidu.com/s/1sROOxFIgQYqrZA0CvLuMUA)。
-
-1. 将net_last.pth文件放置在pysot\mot_zj\MUST_ASSO\model\ft_ResNet50文件夹种；
-2. 将checkpoint.pth.tar文件放置在pysot\mot_zj\MUST_ASSO\Spatial_Attention\logs\cuhk_detected文件夹中；
-3. 将alex_model.pth文件放置在\pysot\mot_zj\MUST_ASSO\Spatial_Attention文件夹中。
+* 将所有文件放入weights文件夹中
 - 运行根目录demo.py文件
 
 ### 方案说明与算法原理
