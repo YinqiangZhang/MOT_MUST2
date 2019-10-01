@@ -49,9 +49,9 @@ YOLOv3、keypoints-Mask-R-CNN、SiamsRPN, ReID[[9]](https://arxiv.org/abs/1811.1
 #### ReID网络训练
 <pre><code>ReID 部分我们使用了cuhk数据集，这个数据集有两个部分cuhk-labelled and cuhk-detected, 最后使用了cuhk-labelled的训练结果
 for cuhk-labelled 
-python pysot/ReID/main.py -d cuhk -b 20 -j 4 --epochs 100 --log ./logs/cuhk_labeled/ --step-size 40 --data data/cuhk03-np/labeled
+python pysot/ReID/main.py -d cuhk -b 20 -j 4 --epochs 100 --log ./logs/cuhk_labeled/ --step-size 40 --data-dir data/cuhk03-np/labeled
 for cuhk-detected
-python pysot/ReID/main.py -d cuhk -b 20 -j 4 --epochs 100 --log ./logs/cuhk_detected/ --step-size 40 --data-dir data/cuhk03-np/labeled
+python pysot/ReID/main.py -d cuhk -b 20 -j 4 --epochs 100 --log ./logs/cuhk_detected/ --step-size 40 --data-dir data/cuhk03-np/detected
 </code></pre>
 
 ##### 其他
