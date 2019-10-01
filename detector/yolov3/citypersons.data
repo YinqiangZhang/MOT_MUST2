@@ -1,0 +1,6 @@
+classes=1
+train=./citypersons_train_modi.txt
+valid=./citypersons_val_modi.txt
+names=./citypersons.names
+backup=backup/
+eval=citypersons
