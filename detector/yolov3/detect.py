@@ -1,15 +1,19 @@
 import argparse
 from sys import platform
-
-from models import *  # set ONNX_EXPORT in models.py
-from utils.datasets import *
-from utils.utils import *
 import numpy as np
 import os
 import sys
 
+from models import *  # set ONNX_EXPORT in models.py
+root = os.getcwd()
+yolo_path = os.path.join(root,'detector','yolov3')
+sys.path.append(yolo_path)
+print(root,yolo_path)
+from utils.datasets import *
+from utils.utils import *
 
-sys.path.append('../..')
+
+
 
 
 def detect(save_txt=True, save_img=False, stream_img=False):
@@ -90,9 +94,10 @@ def detect(save_txt=True, save_img=False, stream_img=False):
                 p, s, im0 = path[i], '%g: ' % i, im0s[i]
             else:
                 p, s, im0 = path, '', im0s
-                _,_,_,_,im_name,_ = path.split('.')
+                print('path',path)
+                im_name,_ = path.split('.')
                 print(im_name)
-                _,_,_,video_name,_,im_num = im_name.split(sep_sign)
+                _,_,video_name,_,im_num = im_name.split(sep_sign)
                 print('im_number is {}'.format(im_num))
             print(p)
 
@@ -160,9 +165,9 @@ def detect(save_txt=True, save_img=False, stream_img=False):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--cfg', type=str, default='cfg/yolov3-spp-1cls.cfg', help='cfg file path')
-    parser.add_argument('--data', type=str, default='citypersons.data', help='citypersons.data file path')
-    parser.add_argument('--weights', type=str, default='weights/yolov3-spp.weights', help='path to weights file')
+    parser.add_argument('--cfg', type=str, default=yolo_path+'/'+'cfg/yolov3-spp-1cls.cfg', help='cfg file path')
+    parser.add_argument('--data', type=str, default=yolo_path+'/'+'citypersons.data', help='citypersons.data file path')
+    parser.add_argument('--weights', type=str, default='weights/yolo_weights.pt', help='path to weights file')
     #parser.add_argument('--weights', type=str, default='weights/last.pt', help='path to weights file')
 
     parser.add_argument('--source', type=str, default='data/samples', help='source')  # input file/folder, 0 for webcam

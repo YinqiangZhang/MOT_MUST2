@@ -7,7 +7,10 @@ import torch
 from torch import nn
 from torch.backends import cudnn
 from torch.utils.data import DataLoader
-
+import os
+root = os.getcwd()
+reid_path = os.path.join(root,'pysot','ReID')
+sys.path.append(reid_path)
 from reid import datasets
 from reid import models
 from reid.trainers_partloss_4stage import Trainer
@@ -17,6 +20,8 @@ from reid.utils.data.preprocessor import Preprocessor
 from reid.utils.logging import Logger
 from reid.utils.serialization import load_checkpoint, save_checkpoint
 import yaml
+
+
 
 '''
 This is the code for paper 'parameter-free spatial attention network for Person Re-Identification'
@@ -175,7 +180,7 @@ if __name__ == '__main__':
     # data
     parser.add_argument('-d', '--dataset', type=str, default='market',
                         choices=datasets.names())
-    parser.add_argument('-b', '--batch-size', type=int, default=64)
+    parser.add_argument('-b', '--batch-size', type=int, default=20)
     parser.add_argument('-j', '--workers', type=int, default=4)
     parser.add_argument('--split', type=int, default=0)
     parser.add_argument('--height', type=int, default=384,
@@ -202,7 +207,7 @@ if __name__ == '__main__':
     parser.add_argument('--resume', type=str, default='', metavar='PATH')
     parser.add_argument('--evaluate', action='store_true',
                         help="evaluation only")
-    parser.add_argument('--epochs', type=int, default=50)
+    parser.add_argument('--epochs', type=int, default=100)
     parser.add_argument('--step-size',type=int, default=40)
     parser.add_argument('--seed', type=int, default=1)
     parser.add_argument('--print-freq', type=int, default=1)
