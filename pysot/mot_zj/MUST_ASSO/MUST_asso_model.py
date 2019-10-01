@@ -32,15 +32,15 @@ class AssociationModel(object):
         checkpoint = load_checkpoint(os.path.join(os.getcwd(), 'weights', 'checkpoint.pth.tar'))
         self.model.load_state_dict(checkpoint['state_dict'])
         self.model.eval()
-        self.frame_root = os.path.join('.\\result\\img')
-        self.tracklet_root = "pysot\\img_traj"
+        self.frame_root = os.path.join(os.getcwd(), 'result', 'img')
+        self.tracklet_root = os.path.join("pysot","img_traj")
         if torch.cuda.is_available():
             self.model = self.model.cuda()
         print('load weights done!')
 
     def __call__(self, bboxes_asso, seq_name, frame, id_num):
         img_trajs = []
-        frame_path = os.path.join(self.frame_root, seq_name, "img1\\{:06d}.jpg".format(frame))
+        frame_path = os.path.join(self.frame_root, seq_name, "img1", "{:06d}.jpg".format(frame))
         traj_dir = os.path.join(self.tracklet_root, seq_name, str(id_num))
         
         img_frame = cv2.imread(frame_path) # the whole frame image needed
