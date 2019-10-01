@@ -67,8 +67,7 @@ python pysot/ReID/main.py -d cuhk -b 20 -j 4 --epochs 100 --log ./logs/cuhk_dete
 </code></pre>
 
 ### 目标检测及后处理
-<pre><code>
-For b1: python3 detector/yolov3/detect.py --source result/img/b1/img1 --output result/img/b1/det --img-size 1920 --save_txt
+<pre><code>For b1: python3 detector/yolov3/detect.py --source result/img/b1/img1 --output result/img/b1/det --img-size 1920 --save_txt
 For b2: python3 detector/yolov3/detect.py --source result/img/b2/img1 --output result/img/b2/det --img-size 1920 --save_txt
 For b3: python3 detector/yolov3/detect.py --source result/img/b3/img1 --output result/img/b3/det --img-size 608 --save_txt
 For b5: python3 detector/yolov3/detect.py --source result/img/b5/img1 --output result/img/b5/det --img-size 1024 --save_txt
@@ -77,9 +76,11 @@ python detector/det_process.py
 </code></pre>
 
 ### 目标跟踪
-<pre><code>
-python demo.py
+<pre><code>python demo.py
 </code></pre>
+
+### 提交结果
+提交结果保存路径： ./result/track
 
 ### *特别说明*
 由于最后提交日时间问题，b3提交结果为level_1阶段应用提交的ECO跟踪算法。复赛的前几次结果也是应用ECO算法提交，即b3与9.12日提交结果一致。
