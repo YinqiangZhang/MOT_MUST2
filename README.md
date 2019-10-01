@@ -28,7 +28,7 @@
 
 ###### 行人跟踪算法原理图
 
-![之后需要替换](./readme_materials/reid.PNG)
+![之后需要替换](./readme_materials/Algorithm.jpg)
 
 
 ### 数据和预训练权重保存
