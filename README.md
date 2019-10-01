@@ -18,7 +18,7 @@
 - 基于检测结果输出跟踪提交结果：共计约5h（1080Ti*1, 64G）
 
 ##### 算法原理
-YOLOv3、keypoints-Mask-R-CNN、SiamsRPN可以根据参考文献内容。
+YOLOv3、keypoints-Mask-R-CNN、SiamsRPN, ReID[9] 可以根据参考文献内容。
 
 ###### 算法框架
 ![之后需要替换](./readme_materials/reid.PNG)
@@ -94,3 +94,6 @@ python detector/det_process.py
 [7] https://github.com/chrispolo/Keypoints-of-humanpose-with-Mask-R-CNN
 
 [8] https://github.com/ultralytics/yolov3
+
+[9] Wang, Haoran, et al. "Parameter-Free Spatial Attention Network for Person Re-Identification." arXiv preprint arXiv:1811.12150 (2018).
+
