@@ -2,8 +2,8 @@
 ---
 ### 依赖项
 
-### 代码环境配置运行
-
+<pre><code> pip install -r requirements.txt
+</code></pre> 
 
 ### 方案说明与算法原理
 ##### 成绩运行时间说明
@@ -20,17 +20,16 @@
 
 *详情请YOLOv3、keypoints-Mask-R-CNN、SiamsRPN可以根据参考文献内容。*
 
-###### 行人跟踪算法原理图
+##### 行人跟踪算法原理图
 
-![之后需要替换](./readme_materials/Algorithm.jpg)
-
+![Algorithm](./readme_materials/Algorithm.jpg)
 
 ### 数据和预训练权重保存
 ##### 训练数据
 本次比赛用到的数据集主要有两类，行人检测数据集citypersons（包含网上搜索自标注的50张图片）和行人重识别的cuhk数据集
 ###### 使用方法：
 将下载的文件夹放入相应的文件夹中，如citypersons连接中包含images的压缩包，可替代仓库中的data中的citypersons中的images文件夹,cuhk-np直接放入data中
-###### 连接如下：
+###### 链接如下：
 - [citypersons(rar)](https://pan.baidu.com/s/1yui64WJi92-bOh49qufCzg)
 - [cuhk](https://pan.baidu.com/s/17mPbmo4NdFmx1pDgUC1msg)
 
@@ -43,11 +42,11 @@
 
 
 ### 训练
-#### Yolo检测网络训练
+##### Yolo检测网络训练
 <pre><code> python3 detector/yolov3/train.py --multi-scale
 </code></pre> 
 
-#### ReID网络训练
+##### ReID网络训练
 <pre><code>ReID 部分我们使用了cuhk数据集，这个数据集有两个部分cuhk-labelled and cuhk-detected, 最后使用了cuhk-labelled的训练结果
 for cuhk-labelled 
 python pysot/ReID/main.py -d cuhk -b 20 -j 4 --epochs 100 --log ./logs/cuhk_labeled/ --step-size 40 --data-dir data/cuhk03-np/labeled
@@ -71,10 +70,10 @@ python pysot/ReID/main.py -d cuhk -b 20 -j 4 --epochs 100 --log ./logs/cuhk_dete
 </code></pre>
 
 ### 提交结果
-提交结果保存路径： ./result/track
+**运行initialize.sh和test.sh后,提交结果保存至"./result/track"**
 
 ### *特别说明*
-由于最后提交日时间问题，b3提交结果为level_1阶段应用提交的ECO跟踪算法。复赛的前几次结果也是应用ECO算法提交，即b3与9.12日提交结果一致。
+由于最后提交日时间问题，b3提交结果为level_1阶段应用提交的ECO跟踪算法。复赛的前几次结果也是应用ECO算法提交，即**b3与9.12日提交结果一致**。
 
 
 ### 参考文献及程序来源
