@@ -93,4 +93,5 @@ python pysot/ReID/main.py -d cuhk -b 20 -j 4 --epochs 100 --log ./logs/cuhk_dete
 [8] https://github.com/ultralytics/yolov3
 
 [9] Wang, Haoran, et al. "Parameter-Free Spatial Attention Network for Person Re-Identification." arXiv preprint arXiv:1811.12150 (2018).
+[10] Zhang, Shanshan, Rodrigo Benenson, and Bernt Schiele. "Citypersons: A diverse dataset for pedestrian detection." Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 2017.
 
