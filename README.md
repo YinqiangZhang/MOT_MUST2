@@ -48,11 +48,13 @@
 </code></pre> 
 
 ##### ReID网络训练
-<pre><code>ReID 部分我们使用了cuhk数据集，这个数据集有两个部分cuhk-labelled and cuhk-detected, 最后使用了cuhk-labelled的训练结果
-for cuhk-labelled 
-python pysot/ReID/main.py -d cuhk -b 20 -j 4 --epochs 100 --log ./logs/cuhk_labeled/ --step-size 40 --data-dir data/cuhk03-np/labeled
-for cuhk-detected
-python pysot/ReID/main.py -d cuhk -b 20 -j 4 --epochs 100 --log ./logs/cuhk_detected/ --step-size 40 --data-dir data/cuhk03-np/detected
+ReID 部分我们使用了cuhk数据集，这个数据集有两个部分cuhk-labelled and cuhk-detected, 最后使用了cuhk-labelled的训练结果
+
+##### for cuhk-labelled 
+<pre><code>python pysot/ReID/main.py -d cuhk -b 20 -j 4 --epochs 100 --log ./logs/cuhk_labeled/ --step-size 40 --data-dir data/cuhk03-np/labeled
+</code></pre>
+##### for cuhk-detected
+<pre><code>python pysot/ReID/main.py -d cuhk -b 20 -j 4 --epochs 100 --log ./logs/cuhk_detected/ --step-size 40 --data-dir data/cuhk03-np/detected
 </code></pre>
 
 ##### 其他
@@ -62,7 +64,7 @@ python pysot/ReID/main.py -d cuhk -b 20 -j 4 --epochs 100 --log ./logs/cuhk_dete
 
 为了增强黑夜检测效果的性能，b4采用keypoints-Mask-R-CNN，其他视频检测应用YOLOv3。
 
-### 生成每帧图像和检测保存,目标检测及后处理
+### 目标检测，单帧图像生成及后处理
 <pre><code>initialize.sh
 </code></pre>
 
