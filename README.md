@@ -84,17 +84,15 @@ ReID 部分我们使用了cuhk数据集，这个数据集有两个部分cuhk-lab
 
 [2] Li B , Wu W , Wang Q , et al. SiamRPN++: Evolution of Siamese Visual Tracking with Very Deep Networks[J]. 2018.
 
-[4] Zhu, J., Yang, H., Liu, N., Kim, M., Zhang, W., Yang, M.: Online Multi-Object Tracking with Dual Matching Attention Networks. In: ECCV (2018)
+[3] Zhu, J., Yang, H., Liu, N., Kim, M., Zhang, W., Yang, M.: Online Multi-Object Tracking with Dual Matching Attention Networks. In: ECCV (2018)
 
-[5] Redmon J , Farhadi A . YOLOv3: An Incremental Improvement. 2018.
+[4] Redmon J , Farhadi A . YOLOv3: An Incremental Improvement. 2018.
 
-[6] Wang H , Fan Y , Wang Z , et al. Parameter-Free Spatial Attention Network for Person Re-Identification[J]. 2018.
+[5] Wang H , Fan Y , Wang Z , et al. Parameter-Free Spatial Attention Network for Person Re-Identification[J]. 2018.
 
-[7] https://github.com/chrispolo/Keypoints-of-humanpose-with-Mask-R-CNN
+[6] https://github.com/chrispolo/Keypoints-of-humanpose-with-Mask-R-CNN
 
-[8] https://github.com/ultralytics/yolov3
+[7] https://github.com/ultralytics/yolov3
 
-[9] Wang, Haoran, et al. "Parameter-Free Spatial Attention Network for Person Re-Identification." arXiv preprint arXiv:1811.12150 (2018).
-
-[10] Zhang, Shanshan, Rodrigo Benenson, and Bernt Schiele. "Citypersons: A diverse dataset for pedestrian detection." Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 2017.
+[8] Zhang, Shanshan, Rodrigo Benenson, and Bernt Schiele. "Citypersons: A diverse dataset for pedestrian detection." Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 2017.
 
