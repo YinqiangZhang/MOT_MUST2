@@ -190,7 +190,7 @@ class ResNet(nn.Module):
 # Part-Level Feature
         sx = x.size(2)//6
         kx = x.size(2)-sx*5
-        print('kx size',kx)
+        # print('kx size',kx)
         x = F.avg_pool2d(x,kernel_size=(kx,x.size(3)),stride=(sx,x.size(3)))   # H4 W8
 
         out0 = x/x.norm(2,1).unsqueeze(1).expand_as(x) # use this feature vector to do distance measure

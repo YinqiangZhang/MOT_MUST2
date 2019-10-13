@@ -15,6 +15,7 @@ import mot_zj.MUST_ASSO.Spatial_Attention.reid.feature_extraction as fe
 from mot_zj.MUST_ASSO.Spatial_Attention.reid import models
 from mot_zj.MUST_ASSO.Spatial_Attention.reid.utils.serialization import load_checkpoint, save_checkpoint
 import mot_zj.MUST_ASSO.function as f
+import time
 
 data_transforms = transforms.Compose([
         transforms.Resize((384, 128), interpolation=3),
@@ -39,6 +40,7 @@ class AssociationModel(object):
         print('load weights done!')
 
     def __call__(self, bboxes_asso, seq_name, frame, id_num):
+        kk = time.time()
         img_trajs = []
         frame_path = os.path.join(self.frame_root, seq_name, "img1", "{:06d}.jpg".format(frame))
         traj_dir = os.path.join(self.tracklet_root, seq_name, str(id_num))
@@ -79,6 +81,7 @@ class AssociationModel(object):
             else:
                 img_tracking = torch.cat((img_tracking,img_trajs[i]),dim=0)
         prediction = np.zeros(num_asso, dtype=np.float32)
+        print("pre time:{}s".format(time.time()-kk))
         # association score
         for ii in range(num_asso):
             x1, y1, w, h = np.ceil(bboxes_asso[ii, :].reshape(bboxes_asso[ii, :].size))
@@ -93,8 +96,9 @@ class AssociationModel(object):
             img_det = data_transforms(img_det)
             img_det_size = img_det.size()
             img_det = img_det.view(-1,img_det_size[0],img_det_size[1],img_det_size[2])
-
+            start = time.time()
             output = f.detection_tracking_com(self.model, img_det, img_tracking)
+            print(time.time()-start)
             # save the results
             prediction[ii] = output
         #print(prediction)

@@ -73,10 +73,10 @@ class MUSTTracker(object):
         # the association model
         self.asso_model = asso_model
         # the target can not be to small
-        if bbox[2]*bbox[3] <= 1000 and self.seq_name[-1] in ['2', '3', '4', '5']:
+        if bbox[2]*bbox[3] <= 1000 and self.seq_name in ['b2', 'b3', 'b4', 'b5']:
             self.track_state = cfg.STATE.STOP
         
-        if bbox[2]*bbox[3] <= 1000 and bbox[1] > 200 and self.seq_name[-1] in ['1']:
+        if bbox[2]*bbox[3] <= 1000 and bbox[1] > 200 and self.seq_name in ['b1']:
             self.track_state = cfg.STATE.STOP
 
     def track(self, img, bboxes_det, frame):
@@ -112,7 +112,7 @@ class MUSTTracker(object):
                 track_label = -1
             
             # the target can not be to small
-            if result_bbox[2]*result_bbox[3] <= 1000 and self.seq_name[-1] in ['2', '5']:
+            if result_bbox[2]*result_bbox[3] <= 1000 and self.seq_name in ['b2', 'b5']:
                 track_label = -1
 
             # judge the state of tracker: 
@@ -134,6 +134,7 @@ class MUSTTracker(object):
                 ratio = result_bbox[2]/result_bbox[3]
                 change = ratio/self.template_ratio
                 if np.maximum(change, 1/change) > 1.2:
+                    # print("tracker template {} update.".format(self.id_num))
                     self.template_ratio = result_bbox[2]/result_bbox[3]
                     self.tracker.init(img,result_bbox)
                     if len(self.tracker.model.zf) > 1:
@@ -206,13 +207,14 @@ class MUSTTracker(object):
 
                 # use deep ReID model to associated tracklet and detections (not implement)
                 prediction = self.asso_model(bboxes_asso, self.seq_name, frame, self.id_num)
+                # in the following results, 
                 ass_score = np.max(prediction)
                 asso_ind = np.argmax(prediction)
 
                 if ass_score > cfg.PARAMS.ASSOCIATION_SCORE_THRESHOLD:
                     asso_label = 1
                     bboxes_det_one = bboxes_asso[asso_ind, :]
-                    print("Target {} associated by appearance with score {}.".format(self.id_num, ass_score))
+                    # print("Target {} associated by appearance with score {}.".format(self.id_num, ass_score))
                 
                 elif frame - fr_tracker < 5 and ass_score > 0.4 and motion_score > 0.5:
                     asso_label = 1
@@ -243,6 +245,7 @@ class MUSTTracker(object):
                     ratio = result_bbox[2]/result_bbox[3]
                     change = ratio/self.template_ratio
                     if np.maximum(change, 1/change) > 1.2:
+                        print("tracker template {} update.".format(self.id_num))
                         self.template_ratio = result_bbox[2]/result_bbox[3]
                         self.tracker.init(img,result_bbox)
                         if len(self.tracker.model.zf) > 1:
