@@ -4,7 +4,13 @@
 *.xmind
 *.pt
 
-part_run.sh
+multi1_initialize.sh
+multi2_detect.sh
+multi3_run.sh
+
+
+part_test.sh
+*.out
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
