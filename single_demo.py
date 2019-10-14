@@ -180,7 +180,7 @@ def main(args):
         ############################################
         
         # collect the tracking results (all the results, without selected)
-        if frame % 500 == 0:
+        if frame  == len(images):
             results_bboxes = np.array([])
             for tracker in trackers:
                 if results_bboxes.size == 0:
@@ -238,7 +238,7 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--seq_name", type=str, default='b1')
-    parser.add_argument("--step_times", type=int, default=8)
+    parser.add_argument("--seq_name", type=str, default='c1')
+    parser.add_argument("--step_times", type=int, default=4)
     args = parser.parse_args()
     main(args)
