@@ -97,6 +97,7 @@ for seq_name in seq_names:
 
     # tracking process in each frame
     for nn, im_path in enumerate(images):
+        each_start = time.time()
         frame = nn + 1
         img = cv2.imread(im_path)
         print('Frame {} is loaded'.format(frame))
@@ -120,6 +121,8 @@ for seq_name in seq_names:
 
         # 2. save the processed index of trackers
         index_processed = []
+        track_time = 0;
+        asso_time = 0;
         for k in range(2):
             # process trackers in the first or the second class
             if k == 0:
@@ -128,6 +131,7 @@ for seq_name in seq_names:
                 index_track = index2
 
             # process trackers (for tracking)
+            track_start = time.time()
             for ind in index_track:
                 if trackers[ind].track_state == cfg.STATE.TRACKED or trackers[ind].track_state == cfg.STATE.ACTIVATED:
                     indices = find_candidate_detection([trackers[i] for i in index_processed], bboxes)
@@ -137,7 +141,10 @@ for seq_name in seq_names:
                     # if the tracker keep its previous tracking state (tracked or activated)
                     if trackers[ind].track_state == cfg.STATE.TRACKED or trackers[ind].track_state == cfg.STATE.ACTIVATED:
                         index_processed.append(ind)
+            track_time += time.time() - track_start
+            
             # process trackers (for association)
+            asso_start = time.time()
             for ind in index_track:
                 if trackers[ind].track_state == cfg.STATE.LOST:
                     indices = find_candidate_detection([trackers[i] for i in index_processed], bboxes)
@@ -146,7 +153,8 @@ for seq_name in seq_names:
                     trackers[ind].track(img, to_track_bboxes, frame)
                     # add process flag
                     index_processed.append(ind)
-
+            asso_time += time.time() - asso_start
+        print("track: {}, asso: {}".format(track_time, asso_time))
         ############################################
         #        ***init new trackers ***          #
         ############################################
@@ -200,7 +208,7 @@ for seq_name in seq_names:
         ############################################
         #        ***crop tracklet image***         #
         ############################################
-
+        write_start = time.time()
         # save the trajectory (tracklet) as image dir
         for tracker in trackers:
             if tracker.track_state == cfg.STATE.START or tracker.track_state == cfg.STATE.TRACKED or tracker.track_state == cfg.STATE.ACTIVATED:
@@ -215,7 +223,7 @@ for seq_name in seq_names:
                     os.makedirs(traj_path)
                 tracklet_img_path = os.path.join(traj_path, str(tracker.frames[-1]))
                 cv2.imwrite("{}.jpg".format(tracklet_img_path), img_traj)
-
+        print("write time: {}".format(time.time()-write_start))
         # visualisation
         if is_visualisation:
             ##########################################
@@ -228,6 +236,7 @@ for seq_name in seq_names:
             anno_img = draw_bboxes(img, bboxes)
             cv2.imshow(seq_name, anno_img)
             cv2.waitKey(1)
-
+        each_time = time.time() - each_start
+        print("each: {}".format(each_time))
 print("The total processing time is: {} s".format(time.time()-start_point))
     
