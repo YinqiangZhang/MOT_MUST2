@@ -17,12 +17,12 @@ class SiamRPNTracker(SiameseTracker):
     def __init__(self, model):
         super(SiamRPNTracker, self).__init__()
         self.score_size = (cfg.TRACK.INSTANCE_SIZE - cfg.TRACK.EXEMPLAR_SIZE) // \
-            cfg.ANCHOR.STRIDE + 1 + cfg.TRACK.BASE_SIZE
+            cfg.ANCHOR.STRIDE + 1 + cfg.TRACK.BASE_SIZE # these things are indenpendent
         self.anchor_num = len(cfg.ANCHOR.RATIOS) * len(cfg.ANCHOR.SCALES)
-        hanning = np.hanning(self.score_size)
-        window = np.outer(hanning, hanning)
-        self.window = np.tile(window.flatten(), self.anchor_num)
-        self.anchors = self.generate_anchor(self.score_size)
+        hanning = np.hanning(self.score_size) # hanning curve , one dimension
+        window = np.outer(hanning, hanning) # cos window, two dimensions
+        self.window = np.tile(window.flatten(), self.anchor_num) # tile the window along only one dimension
+        self.anchors = self.generate_anchor(self.score_size) # generate anchors
         self.model = model
         self.model.eval()
 

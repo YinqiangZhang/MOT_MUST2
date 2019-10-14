@@ -17,7 +17,8 @@ params_dir = os.path.join(root, 'weights')
 sys.path.append(root)
 sys.path.append(track_dir)
 
-def main(seq_name):
+def main(args):
+    seq_name = args.seq_name
     # the packages of trackers
     from pysot.core.config import cfg # use the modified config file to reset the tracking system
     from pysot.models.model_builder import ModelBuilder
@@ -26,7 +27,6 @@ def main(seq_name):
     from mot_zj.MUST_utils import draw_bboxes, find_candidate_detection, handle_conflicting_trackers, sort_trackers
     from mot_zj.MUST_ASSO.MUST_asso_model import AssociationModel
     from mot_zj.MUST_utils import traj_interpolate
-
 
 
     dataset_dir = os.path.join(root, 'result')
@@ -67,7 +67,7 @@ def main(seq_name):
     track_model.load_state_dict(torch.load(model_params, map_location=lambda storage, loc: storage.cpu()))
     track_model.eval().to(device)
     # create assoiation model
-    asso_model = AssociationModel()
+    asso_model = AssociationModel(args)
 
     seq_det_path = os.path.join(seq_dir, seq_name, 'det')
     seq_img_path = os.path.join(seq_dir, seq_name, 'img1')
@@ -131,7 +131,7 @@ def main(seq_name):
                 index_track = index1
             else:
                 index_track = index2
-
+            track_start = time.time()
             for ind in index_track:
                 if trackers[ind].track_state == cfg.STATE.TRACKED or trackers[ind].track_state == cfg.STATE.ACTIVATED:
                     indices = find_candidate_detection([trackers[i] for i in index_processed], bboxes)
@@ -141,7 +141,8 @@ def main(seq_name):
                     # if the tracker keep its previous tracking state (tracked or activated)
                     if trackers[ind].track_state == cfg.STATE.TRACKED or trackers[ind].track_state == cfg.STATE.ACTIVATED:
                         index_processed.append(ind)
-            
+            track_time += time.time() - track_start
+            asso_start = time.time()
             for ind in index_track:
                 if trackers[ind].track_state == cfg.STATE.LOST:
                     indices = find_candidate_detection([trackers[i] for i in index_processed], bboxes)
@@ -150,7 +151,7 @@ def main(seq_name):
                     trackers[ind].track(img, to_track_bboxes, frame)
                     # add process flag
                     index_processed.append(ind)
-
+            asso_time += time.time() - asso_start
         ############################################
         #        ***init new trackers ***          #
         ############################################
@@ -218,6 +219,8 @@ def main(seq_name):
                     os.makedirs(traj_path)
                 tracklet_img_path = os.path.join(traj_path, str(tracker.frames[-1]))
                 cv2.imwrite("{}.jpg".format(tracklet_img_path), img_traj)
+        each_time = time.time() - each_start
+        print("period: {}s, track: {}s({:.2f}), asso: {}s({:.2f})".format(each_time, track_time,(track_time/each_time)*100, asso_time, (asso_time/each_time)*100))
         if is_visualisation:
             ##########################################
             # infomation print and visualisation     #
@@ -229,11 +232,13 @@ def main(seq_name):
             anno_img = draw_bboxes(img, bboxes)
             cv2.imshow(seq_name, anno_img)
             cv2.waitKey(1)
+        print("The running time is: {} s".format(time.time()-start_point))
 
     print("The total processing time is: {} s".format(time.time()-start_point))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--seq_name", type=str, default='b1')
+    parser.add_argument("--step_times", type=int, default=8)
     args = parser.parse_args()
-    main(args.seq_name)
+    main(args)

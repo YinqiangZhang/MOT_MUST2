@@ -27,7 +27,7 @@ from mot_zj.MUST_utils import traj_interpolate
 
 dataset_dir = os.path.join(root, 'result')
 seq_type = 'img'
-# set the path of config parameters and 
+# set the path of config parameters and
 config_path = os.path.join(track_dir, "mot_zj","MUST_config_file","alex_config.yaml")
 model_params = os.path.join(params_dir, "alex_model.pth")
 # enable the visualisation or not 
@@ -82,7 +82,7 @@ for seq_name in seq_names:
     det_results = np.loadtxt(os.path.join(seq_det_path, 'det.txt'), dtype=float, delimiter=',')
     
     # read images from each sequence
-    images = glob.glob(os.path.join(seq_img_path, '*.jpg'))
+    images = sorted(glob.glob(os.path.join(seq_img_path, '*.jpg')))
     img_num = len(images)
 
     # the contrainer of trackers
@@ -131,7 +131,7 @@ for seq_name in seq_names:
                 index_track = index2
 
             # process trackers (for tracking)
-            track_start = time.time()
+            # track_start = time.time()
             for ind in index_track:
                 if trackers[ind].track_state == cfg.STATE.TRACKED or trackers[ind].track_state == cfg.STATE.ACTIVATED:
                     indices = find_candidate_detection([trackers[i] for i in index_processed], bboxes)
@@ -141,10 +141,10 @@ for seq_name in seq_names:
                     # if the tracker keep its previous tracking state (tracked or activated)
                     if trackers[ind].track_state == cfg.STATE.TRACKED or trackers[ind].track_state == cfg.STATE.ACTIVATED:
                         index_processed.append(ind)
-            track_time += time.time() - track_start
+            # track_time += time.time() - track_start
             
             # process trackers (for association)
-            asso_start = time.time()
+            # asso_start = time.time()
             for ind in index_track:
                 if trackers[ind].track_state == cfg.STATE.LOST:
                     indices = find_candidate_detection([trackers[i] for i in index_processed], bboxes)
@@ -153,8 +153,8 @@ for seq_name in seq_names:
                     trackers[ind].track(img, to_track_bboxes, frame)
                     # add process flag
                     index_processed.append(ind)
-            asso_time += time.time() - asso_start
-        print("track: {}, asso: {}".format(track_time, asso_time))
+            # asso_time += time.time() - asso_start
+        # print("track: {}, asso: {}".format(track_time, asso_time))
         ############################################
         #        ***init new trackers ***          #
         ############################################
@@ -184,6 +184,7 @@ for seq_name in seq_names:
        
         # collect the tracking results (all the results, without selected)
         if frame % 100 == 0:
+            break
             results_bboxes = np.array([])
             for tracker in trackers:
                 if results_bboxes.size == 0:
@@ -208,7 +209,7 @@ for seq_name in seq_names:
         ############################################
         #        ***crop tracklet image***         #
         ############################################
-        write_start = time.time()
+        # write_start = time.time()
         # save the trajectory (tracklet) as image dir
         for tracker in trackers:
             if tracker.track_state == cfg.STATE.START or tracker.track_state == cfg.STATE.TRACKED or tracker.track_state == cfg.STATE.ACTIVATED:
@@ -223,7 +224,7 @@ for seq_name in seq_names:
                     os.makedirs(traj_path)
                 tracklet_img_path = os.path.join(traj_path, str(tracker.frames[-1]))
                 cv2.imwrite("{}.jpg".format(tracklet_img_path), img_traj)
-        print("write time: {}".format(time.time()-write_start))
+        # print("write time: {}".format(time.time()-write_start))
         # visualisation
         if is_visualisation:
             ##########################################
@@ -236,7 +237,8 @@ for seq_name in seq_names:
             anno_img = draw_bboxes(img, bboxes)
             cv2.imshow(seq_name, anno_img)
             cv2.waitKey(1)
-        each_time = time.time() - each_start
-        print("each: {}".format(each_time))
+        # each_time = time.time() - each_start
+        # print("each: {}".format(each_time))
+    break
 print("The total processing time is: {} s".format(time.time()-start_point))
     
