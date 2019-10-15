@@ -28,7 +28,7 @@ class AssociationModel(object):
         self.time_steps = args.step_times
         # model parameter setting:
         data_name = 'cuhk_detected'
-        self.model = models.create('resnet50', num_features=256, dropout=0.5, num_classes=767)
+        self.model = models.create('resnet18', num_features=256, dropout=0.5, num_classes=767)
         checkpoint = load_checkpoint(os.path.join(os.getcwd(), 'weights', 'checkpoint.pth.tar'))
         self.model.load_state_dict(checkpoint['state_dict'])
         self.model.eval()
