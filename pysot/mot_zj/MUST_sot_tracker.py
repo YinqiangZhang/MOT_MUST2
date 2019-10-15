@@ -219,7 +219,7 @@ class MUSTTracker(object):
                 elif frame - fr_tracker < 5 and ass_score > 0.4 and motion_score > 0.5:
                     asso_label = 1
                     bboxes_det_one = bboxes_asso[motion_ind, :]
-                    print("Target {} associated by motion.".format(self.id_num))
+                    # print("Target {} associated by motion.".format(self.id_num))
                 else:
                     asso_label = -1
                 

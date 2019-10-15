@@ -140,7 +140,7 @@ try:
                 print('trajectory size',img_tracking.size())
                 output = f.detection_tracking_com(model,img_det,img_tracking)
                 print(output)
-                prediction[i] = output
+                prediction[i] = output # every time, only one detection result will be evaluated.
             print(prediction)
             sio.savemat('similarity.mat', {'similarity': prediction})
             connection.sendall(bytes('server ok', encoding='utf-8'))

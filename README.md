@@ -82,7 +82,7 @@ ReID 部分我们使用了cuhk数据集，这个数据集有两个部分cuhk-lab
 ### 参考文献及程序来源
 [1] https://github.com/STVIR/pysot
 
-[2] Li B , Wu W , Wang Q , et al. SiamRPN++: Evolution of Siamese Visual Tracking with Very Deep Networks[J]. 2018.
+[2] Bo Li, Junjie Yan, Wei Wu, Zheng Zhu, Xiaolin Hu; The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2018, pp. 8971-8980
 
 [3] Zhu, J., Yang, H., Liu, N., Kim, M., Zhang, W., Yang, M.: Online Multi-Object Tracking with Dual Matching Attention Networks. In: ECCV (2018)
 
