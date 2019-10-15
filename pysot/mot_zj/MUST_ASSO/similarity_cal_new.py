@@ -28,7 +28,7 @@ connection, adbboxess = socket_tcp.accept()
 try:
     # model parameter setting:
     data_name = 'cuhk_detected'
-    model = models.create('resnet50', num_features=256, dropout=0.5, num_classes=767)
+    model = models.create('resnet18', num_features=256, dropout=0.5, num_classes=767)
     checkpoint = load_checkpoint(os.path.join('./Spatial_Attention/logs',data_name, 'checkpoint.pth.tar'))
     model.load_state_dict(checkpoint['state_dict'])
     model.eval()

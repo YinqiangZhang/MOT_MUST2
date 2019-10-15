@@ -180,7 +180,7 @@ if __name__ == '__main__':
     # data
     parser.add_argument('-d', '--dataset', type=str, default='market',
                         choices=datasets.names())
-    parser.add_argument('-b', '--batch-size', type=int, default=20)
+    parser.add_argument('-b', '--batch-size', type=int, default=32)
     parser.add_argument('-j', '--workers', type=int, default=4)
     parser.add_argument('--split', type=int, default=0)
     parser.add_argument('--height', type=int, default=384,
@@ -193,7 +193,7 @@ if __name__ == '__main__':
                         help="train and val sets together for training, "
                              "val set alone for validation")
     # model
-    parser.add_argument('-a', '--arch', type=str, default='resnet50',
+    parser.add_argument('-a', '--arch', type=str, default='resnet18',
                         choices=models.names())
     parser.add_argument('--features', type=int, default=256)
     parser.add_argument('--dropout', type=float, default=0.5)
