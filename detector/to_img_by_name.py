@@ -9,6 +9,9 @@ def to_img(video):
     video_root = "./video"
     video_path = os.path.join(video_root, video)
     cap = cv2.VideoCapture(video_path)
+
+    # height = cap.get(4)
+    # width = cap.get(3)
     frame_index = 1
 
     data = []
@@ -56,7 +59,7 @@ def to_img(video):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--file', type=str, help='file name')
+    parser.add_argument('--file', type=str, help='file name',default="c1.mp4")
 
     opt = parser.parse_args()
     
