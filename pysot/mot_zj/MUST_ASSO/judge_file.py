@@ -37,11 +37,13 @@ parser.add_argument('--batchsize', default=8, type=int, help='batchsize')
 parser.add_argument('--use_dense', action='store_true', help='use densenet121')
 parser.add_argument('--PCB', action='store_true', help='use PCB')
 parser.add_argument('--fp16', action='store_true', help='use fp16.')
+parser.add_argument("--seq_name", type=str, default='b1')
+parser.add_argument("--step_times", type=int, default=8)
 
 opt = parser.parse_args()
 ###load config###
 # load the training config
-config_path = os.path.join('pysot\\mot_zj\\MUST_ASSO\\model', opt.name, 'opts.yaml')
+config_path = os.path.join('pysot/mot_zj/MUST_ASSO/model', opt.name, 'opts.yaml')
 with open(config_path, 'r') as stream:
     config = yaml.load(stream)
 opt.fp16 = False  # config['fp16']

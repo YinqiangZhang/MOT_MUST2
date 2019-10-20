@@ -78,9 +78,9 @@ class ResNet(nn.Module):
         self.dropout = dropout
         out_planes = self.base.fc.in_features
         self.local_conv = nn.Conv2d(out_planes, self.num_features, kernel_size=1,padding=0,bias=False)
-        self.local_conv_layer1 = nn.Conv2d(256, self.num_features, kernel_size=1,padding=0,bias=False)
-        self.local_conv_layer2 = nn.Conv2d(512, self.num_features, kernel_size=1,padding=0,bias=False)
-        self.local_conv_layer3 = nn.Conv2d(1024, self.num_features, kernel_size=1,padding=0,bias=False)
+        self.local_conv_layer1 = nn.Conv2d(64, self.num_features, kernel_size=1,padding=0,bias=False)
+        self.local_conv_layer2 = nn.Conv2d(128, self.num_features, kernel_size=1,padding=0,bias=False)
+        self.local_conv_layer3 = nn.Conv2d(256, self.num_features, kernel_size=1,padding=0,bias=False)
 
         init.kaiming_normal(self.local_conv.weight, mode= 'fan_out')
 #       init.constant(self.local_conv.bias,0)
@@ -190,7 +190,7 @@ class ResNet(nn.Module):
 # Part-Level Feature
         sx = x.size(2)//6
         kx = x.size(2)-sx*5
-        print('kx size',kx)
+        # print('kx size',kx)
         x = F.avg_pool2d(x,kernel_size=(kx,x.size(3)),stride=(sx,x.size(3)))   # H4 W8
 
         out0 = x/x.norm(2,1).unsqueeze(1).expand_as(x) # use this feature vector to do distance measure

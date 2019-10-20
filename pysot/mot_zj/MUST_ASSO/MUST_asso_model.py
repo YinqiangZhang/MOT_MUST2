@@ -14,7 +14,8 @@ import torchvision.transforms as transforms
 import mot_zj.MUST_ASSO.Spatial_Attention.reid.feature_extraction as fe
 from mot_zj.MUST_ASSO.Spatial_Attention.reid import models
 from mot_zj.MUST_ASSO.Spatial_Attention.reid.utils.serialization import load_checkpoint, save_checkpoint
-import mot_zj.MUST_ASSO.function as f
+import mot_zj.MUST_ASSO.function_new2 as f
+import time
 
 data_transforms = transforms.Compose([
         transforms.Resize((384, 128), interpolation=3),
@@ -22,13 +23,12 @@ data_transforms = transforms.Compose([
         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
 ])
 
-time_steps = 8
-
 class AssociationModel(object):
-    def __init__(self):
+    def __init__(self, args):
+        self.time_steps = args.step_times
         # model parameter setting:
         data_name = 'cuhk_detected'
-        self.model = models.create('resnet50', num_features=256, dropout=0.5, num_classes=767)
+        self.model = models.create('resnet18', num_features=256, dropout=0.5, num_classes=767)
         checkpoint = load_checkpoint(os.path.join(os.getcwd(), 'weights', 'checkpoint.pth.tar'))
         self.model.load_state_dict(checkpoint['state_dict'])
         self.model.eval()
@@ -39,6 +39,7 @@ class AssociationModel(object):
         print('load weights done!')
 
     def __call__(self, bboxes_asso, seq_name, frame, id_num):
+        # kk = time.time()
         img_trajs = []
         frame_path = os.path.join(self.frame_root, seq_name, "img1", "{:06d}.jpg".format(frame))
         traj_dir = os.path.join(self.tracklet_root, seq_name, str(id_num))
@@ -53,20 +54,20 @@ class AssociationModel(object):
             if subfile[-3:] == 'jpg':
                 img_traj_list.append(subfile)
         num_traj = len(img_traj_list)
-        if num_traj < time_steps:
+        if num_traj < self.time_steps:
             tmp_list = img_traj_list[::-1]
-            while len(img_traj_list) < time_steps:
+            while len(img_traj_list) < self.time_steps:
                 img_traj_list += tmp_list
-            img_traj_list = img_traj_list[0:time_steps]
+            img_traj_list = img_traj_list[0:self.time_steps]
         else:
-            gap = num_traj // time_steps
-            mod = num_traj % time_steps
+            gap = num_traj // self.time_steps
+            mod = num_traj % self.time_steps
             tmp_list = img_traj_list
             img_traj_list = []
             for i in range(mod, num_traj, int(gap)):
                 img_traj_list.append(tmp_list[i])
 
-        for i in range(time_steps):
+        for i in range(self.time_steps):
             img = cv2.imread(os.path.join(traj_dir, img_traj_list[i]))
             img_traj = Image.fromarray(img)
             img_traj = data_transforms(img_traj)
@@ -79,6 +80,7 @@ class AssociationModel(object):
             else:
                 img_tracking = torch.cat((img_tracking,img_trajs[i]),dim=0)
         prediction = np.zeros(num_asso, dtype=np.float32)
+        # print("pre time:{}s".format(time.time()-kk))
         # association score
         for ii in range(num_asso):
             x1, y1, w, h = np.ceil(bboxes_asso[ii, :].reshape(bboxes_asso[ii, :].size))
@@ -93,8 +95,7 @@ class AssociationModel(object):
             img_det = data_transforms(img_det)
             img_det_size = img_det.size()
             img_det = img_det.view(-1,img_det_size[0],img_det_size[1],img_det_size[2])
-
-            output = f.detection_tracking_com(self.model, img_det, img_tracking)
+            output = f.detection_tracking_com(self.model, img_det, img_tracking, self.time_steps)
             # save the results
             prediction[ii] = output
         #print(prediction)

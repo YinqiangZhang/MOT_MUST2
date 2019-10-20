@@ -8,6 +8,8 @@ import torch
 import shutil
 import numpy as np
 import yacs
+import argparse
+
 
 root = os.getcwd()
 track_dir = os.path.join(root, 'pysot')
@@ -15,57 +17,57 @@ params_dir = os.path.join(root, 'weights')
 sys.path.append(root)
 sys.path.append(track_dir)
 
-# the packages of trackers
-from pysot.core.config import cfg # use the modified config file to reset the tracking system
-from pysot.models.model_builder import ModelBuilder
-# modified single tracker with warpper
-from mot_zj.MUST_sot_builder import build_tracker
-from mot_zj.MUST_utils import draw_bboxes, find_candidate_detection, handle_conflicting_trackers, sort_trackers
-from mot_zj.MUST_ASSO.MUST_asso_model import AssociationModel
-from mot_zj.MUST_utils import traj_interpolate
+def main(args):
+    seq_name = args.seq_name
+    # the packages of trackers
+    from pysot.core.config import cfg # use the modified config file to reset the tracking system
+    from pysot.models.model_builder import ModelBuilder
+    # modified single tracker with warpper
+    from mot_zj.MUST_sot_builder import build_tracker
+    from mot_zj.MUST_utils import draw_bboxes, find_candidate_detection, handle_conflicting_trackers, sort_trackers
+    from mot_zj.MUST_ASSO.MUST_asso_model import AssociationModel
+    from mot_zj.MUST_utils import traj_interpolate
 
 
-dataset_dir = os.path.join(root, 'result')
-seq_type = 'img'
-# set the path of config parameters and
-config_path = os.path.join(track_dir, "mot_zj","MUST_config_file","alex_config.yaml")
-model_params = os.path.join(params_dir, "alex_model.pth")
-# enable the visualisation or not 
-is_visualisation = False
-# print the information of the tracking process or not 
-is_print = True
+    dataset_dir = os.path.join(root, 'result')
+    seq_type = 'img'
+    # set the path of config parameters and
+    config_path = os.path.join(track_dir, "mot_zj","MUST_config_file","alex_config.yaml")
+    model_params = os.path.join(params_dir, "alex_model.pth")
+    # enable the visualisation or not 
+    is_visualisation = False
+    # print the information of the tracking process or not 
+    is_print = True
 
-results_dir = os.path.join(dataset_dir,'track')
-if not os.path.exists(results_dir):
-    os.makedirs(results_dir)
-img_traj_dir = os.path.join(track_dir, "img_traj")
-if os.path.exists(img_traj_dir):
-    shutil.rmtree(img_traj_dir)
+    results_dir = os.path.join(dataset_dir,'track')
+    if not os.path.exists(results_dir):
+        os.makedirs(results_dir)
+    img_traj_dir = os.path.join(track_dir, "img_traj")
+    if os.path.exists(os.path.join(img_traj_dir, seq_name)):
+        shutil.rmtree(os.path.join(img_traj_dir, seq_name))
 
-seq_dir = os.path.join(dataset_dir, seq_type)
-seq_names = os.listdir(seq_dir)
-seq_num = len(seq_names)
+    seq_dir = os.path.join(dataset_dir, seq_type)
+    seq_names = os.listdir(seq_dir)
+    seq_num = len(seq_names)
 
-# record the processing time
-start_point = time.time()
+    # record the processing time
+    start_point = time.time()
 
-# load config
-# load the config information from other variables
-cfg.merge_from_file(config_path)
+    # load config
+    # load the config information from other variables
+    cfg.merge_from_file(config_path)
 
-# set the flag that CUDA is available 
-cfg.CUDA = torch.cuda.is_available()
-device = torch.device('cuda' if cfg.CUDA else 'cpu')
+    # set the flag that CUDA is available 
+    cfg.CUDA = torch.cuda.is_available()
+    device = torch.device('cuda' if cfg.CUDA else 'cpu')
 
-# create the tracker model (Resnet50)
-track_model = ModelBuilder()
-# load tracker model
-track_model.load_state_dict(torch.load(model_params, map_location=lambda storage, loc: storage.cpu()))
-track_model.eval().to(device)
-# create assoiation model
-asso_model = AssociationModel()
-
-for seq_name in seq_names:
+    # create the tracker model (Resnet50)
+    track_model = ModelBuilder()
+    # load tracker model
+    track_model.load_state_dict(torch.load(model_params, map_location=lambda storage, loc: storage.cpu()))
+    track_model.eval().to(device)
+    # create assoiation model
+    asso_model = AssociationModel(args)
 
     seq_det_path = os.path.join(seq_dir, seq_name, 'det')
     seq_img_path = os.path.join(seq_dir, seq_name, 'img1')
@@ -80,7 +82,7 @@ for seq_name in seq_names:
 
     # read the detection results
     det_results = np.loadtxt(os.path.join(seq_det_path, 'det.txt'), dtype=float, delimiter=',')
-    
+
     # read images from each sequence
     images = sorted(glob.glob(os.path.join(seq_img_path, '*.jpg')))
     img_num = len(images)
@@ -91,7 +93,7 @@ for seq_name in seq_names:
     # visualisation settings
     if is_visualisation:
         cv2.namedWindow(seq_name, cv2.WINDOW_NORMAL)
-    
+
     # init(reset) the identifer
     id_num = 0
 
@@ -129,9 +131,7 @@ for seq_name in seq_names:
                 index_track = index1
             else:
                 index_track = index2
-
-            # process trackers (for tracking)
-            # track_start = time.time()
+            track_start = time.time()
             for ind in index_track:
                 if trackers[ind].track_state == cfg.STATE.TRACKED or trackers[ind].track_state == cfg.STATE.ACTIVATED:
                     indices = find_candidate_detection([trackers[i] for i in index_processed], bboxes)
@@ -141,10 +141,8 @@ for seq_name in seq_names:
                     # if the tracker keep its previous tracking state (tracked or activated)
                     if trackers[ind].track_state == cfg.STATE.TRACKED or trackers[ind].track_state == cfg.STATE.ACTIVATED:
                         index_processed.append(ind)
-            # track_time += time.time() - track_start
-            
-            # process trackers (for association)
-            # asso_start = time.time()
+            track_time += time.time() - track_start
+            asso_start = time.time()
             for ind in index_track:
                 if trackers[ind].track_state == cfg.STATE.LOST:
                     indices = find_candidate_detection([trackers[i] for i in index_processed], bboxes)
@@ -153,8 +151,7 @@ for seq_name in seq_names:
                     trackers[ind].track(img, to_track_bboxes, frame)
                     # add process flag
                     index_processed.append(ind)
-            # asso_time += time.time() - asso_start
-        # print("track: {}, asso: {}".format(track_time, asso_time))
+            asso_time += time.time() - asso_start
         ############################################
         #        ***init new trackers ***          #
         ############################################
@@ -181,10 +178,9 @@ for seq_name in seq_names:
         ############################################
         #    ***collect tracking results***        #
         ############################################
-       
+        
         # collect the tracking results (all the results, without selected)
-        if frame % 100 == 0:
-            break
+        if frame  == len(images):
             results_bboxes = np.array([])
             for tracker in trackers:
                 if results_bboxes.size == 0:
@@ -209,8 +205,7 @@ for seq_name in seq_names:
         ############################################
         #        ***crop tracklet image***         #
         ############################################
-        # write_start = time.time()
-        # save the trajectory (tracklet) as image dir
+
         for tracker in trackers:
             if tracker.track_state == cfg.STATE.START or tracker.track_state == cfg.STATE.TRACKED or tracker.track_state == cfg.STATE.ACTIVATED:
                 bbox = tracker.tracking_bboxes[-1, :]
@@ -224,8 +219,8 @@ for seq_name in seq_names:
                     os.makedirs(traj_path)
                 tracklet_img_path = os.path.join(traj_path, str(tracker.frames[-1]))
                 cv2.imwrite("{}.jpg".format(tracklet_img_path), img_traj)
-        # print("write time: {}".format(time.time()-write_start))
-        # visualisation
+        each_time = time.time() - each_start
+        print("period: {}s, track: {}s({:.2f}), asso: {}s({:.2f})".format(each_time, track_time,(track_time/each_time)*100, asso_time, (asso_time/each_time)*100))
         if is_visualisation:
             ##########################################
             # infomation print and visualisation     #
@@ -237,8 +232,13 @@ for seq_name in seq_names:
             anno_img = draw_bboxes(img, bboxes)
             cv2.imshow(seq_name, anno_img)
             cv2.waitKey(1)
-        # each_time = time.time() - each_start
-        # print("each: {}".format(each_time))
-    break
-print("The total processing time is: {} s".format(time.time()-start_point))
-    
+        print("The running time is: {} s".format(time.time()-start_point))
+
+    print("The total processing time is: {} s".format(time.time()-start_point))
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--seq_name", type=str, default='c1')
+    parser.add_argument("--step_times", type=int, default=4)
+    args = parser.parse_args()
+    main(args)

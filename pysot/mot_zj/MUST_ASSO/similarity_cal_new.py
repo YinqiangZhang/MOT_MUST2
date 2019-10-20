@@ -28,7 +28,7 @@ connection, adbboxess = socket_tcp.accept()
 try:
     # model parameter setting:
     data_name = 'cuhk_detected'
-    model = models.create('resnet50', num_features=256, dropout=0.5, num_classes=767)
+    model = models.create('resnet18', num_features=256, dropout=0.5, num_classes=767)
     checkpoint = load_checkpoint(os.path.join('./Spatial_Attention/logs',data_name, 'checkpoint.pth.tar'))
     model.load_state_dict(checkpoint['state_dict'])
     model.eval()
@@ -140,7 +140,7 @@ try:
                 print('trajectory size',img_tracking.size())
                 output = f.detection_tracking_com(model,img_det,img_tracking)
                 print(output)
-                prediction[i] = output
+                prediction[i] = output # every time, only one detection result will be evaluated.
             print(prediction)
             sio.savemat('similarity.mat', {'similarity': prediction})
             connection.sendall(bytes('server ok', encoding='utf-8'))
